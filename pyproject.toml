@@ -1,7 +1,7 @@
 [tool.poetry]
-name = "pyproject"
+name = "pysecuritytxt"
 version = "0.0.1"
-description = "Python CLI and module for project"
+description = "Python CLI and module for querying security.txt files on domains."
 authors = ["Raphaël Vinot <raphael.vinot@circl.lu>"]
 license = "BSD-3-Clause"
 
@@ -26,7 +26,7 @@ classifiers = [
 include = ['README.md']
 
 [tool.poetry.scripts]
-client = 'pyproject:main'
+pysecuritytxt = 'pysecuritytxt:main'
 
 [tool.poetry.dependencies]
 python = "^3.8"

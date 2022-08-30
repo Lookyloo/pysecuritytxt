@@ -1,20 +1,29 @@
-# Python client and module for Project Template
+# Python client and module for querying .well-known/security.txt files
 
-This is a simple template used in all the web based APIs in this repository, and a few others.
+Give it a domain, it tries to fetch the security.txt file
 
 ## Installation
 
 ```bash
-pip install pyproject
+pip install pysecuritytxt
 ```
 
 ## Usage
 
 ### Command line
 
-You can use the `client` command to do a thing:
+You can use the `pysecuritytxt` command:
 
 ```bash
+usage: pysecuritytxt [-h] url_or_domain
+
+Try to get a security.txt file
+
+positional arguments:
+  url_or_domain  Try to get the file from there.
+
+  options:
+    -h, --help     show this help message and exit
 ```
 
 ### Library
