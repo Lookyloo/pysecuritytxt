@@ -4,6 +4,8 @@ version = "0.0.1-dev"
 description = "Python CLI and module for querying security.txt files on domains."
 authors = ["Raphaël Vinot <raphael.vinot@circl.lu>"]
 license = "BSD-3-Clause"
+repository = "https://github.com/Lookyloo/pysecuritytxt"
+
 
 readme = "README.md"
 
