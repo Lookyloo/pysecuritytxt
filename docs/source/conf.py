@@ -17,12 +17,12 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'PyProject'
-copyright = '2021, Lookyloo team'
+project = 'PySecurityTXT'
+copyright = '2022, Lookyloo team'
 author = 'Lookyloo team'
 
 # The full version, including alpha/beta/rc tags
-release = 'v0.0.1'
+release = 'v0.1.0'
 
 
 # -- General configuration ---------------------------------------------------

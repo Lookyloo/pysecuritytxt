@@ -4,11 +4,11 @@ API reference
 .. toctree::
    :maxdepth: 2
 
-.. automodule:: pyproject
+.. automodule:: pysecuritytxt
    :members:
 
-PyProject
----------
+PySecurityTXT
+-------------
 
-.. autoclass:: PyProject
+.. autoclass:: PySecurityTXT
    :members:
