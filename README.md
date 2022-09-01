@@ -15,15 +15,16 @@ pip install pysecuritytxt
 You can use the `pysecuritytxt` command:
 
 ```bash
-usage: pysecuritytxt [-h] url_or_domain
+usage: pysecuritytxt [-h] [-p] url_or_domain
 
 Try to get a security.txt file
 
 positional arguments:
   url_or_domain  Try to get the file from there.
 
-  options:
-    -h, --help     show this help message and exit
+options:
+  -h, --help     show this help message and exit
+  -p, --parse    Parse the response, returns dict
 ```
 
 ### Library
