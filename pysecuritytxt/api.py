@@ -99,7 +99,7 @@ class PySecurityTXT():
             to_return['prefered-languages'] = languages
         return to_return
 
-    def get(self, hint: str, /, *, parse=False) -> str:
+    def get(self, hint: str, /, *, parse: bool=False) -> str:
         '''Get the security.txt file.
 
             :param hint: It can be a domain, an IP or an URL (and we try to figure out where the file is), or a full URL to the file.
