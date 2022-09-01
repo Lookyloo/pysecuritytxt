@@ -23,6 +23,7 @@ class SecurityTXTNotAvailable(PySecurityTXTException):
 class PySecurityTXT():
 
     def __init__(self, loglevel: int=logging.INFO):
+        """Do things to a security.txt file."""
         self.logger = logging.getLogger(f'{self.__class__.__name__}')
         self.logger.setLevel(loglevel)
         self.session = requests.session()
@@ -48,6 +49,10 @@ class PySecurityTXT():
         return to_return
 
     def parse(self, file: str) -> Dict[str, Union[str, List[str]]]:
+        """Takes a security.txt file, parses it.
+
+            :param file: The security.txt file.
+        """
         to_return = {}
         if acknowledgments := re.findall("^[A,a]cknowledgments[:]? (.*)$", file, re.MULTILINE):
             if len(acknowledgments) == 1:
@@ -96,8 +101,9 @@ class PySecurityTXT():
 
     def get(self, hint: str, /, *, parse=False) -> str:
         '''Get the security.txt file.
-        :param hint: It can be a domain, an IP or an URL (and we try to figure out where the file is), or a full URL to the file.
-        :param parse: Parse the file and returns a json dictionary with the relevant fields
+
+            :param hint: It can be a domain, an IP or an URL (and we try to figure out where the file is), or a full URL to the file.
+            :param parse: Parse the file and returns a json dictionary with the relevant fields
         '''
         if hint.endswith('security.txt'):
             return self._try_get_url(hint)
