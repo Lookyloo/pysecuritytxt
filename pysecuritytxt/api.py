@@ -27,7 +27,7 @@ class PySecurityTXT():
         self.logger = logging.getLogger(f'{self.__class__.__name__}')
         self.logger.setLevel(loglevel)
         self.session = requests.session()
-        self.expected_path = '/.well-known/security.txt'
+        self.expected_paths = ['/.well-known/security.txt', '/security.txt']
 
     def _try_get_url(self, url: str) -> str:
         try:
@@ -126,18 +126,20 @@ class PySecurityTXT():
         test_urls: Set[str] = set()
         for domain in all_domains:
             # we have what should be a domain or an ip, let's try a few things
-            test_urls.update([
-                urljoin(f'https://{domain}', self.expected_path),
-                urljoin(f'http://{domain}', self.expected_path)
-            ])
-
-            if not domain.startswith('www') and not ip:
+            for expected_path in self.expected_paths:
                 test_urls.update([
-                    urljoin(f'https://www.{domain}', self.expected_path),
-                    urljoin(f'http://www.{domain}', self.expected_path)
+                    urljoin(f'https://{domain}', expected_path),
+                    urljoin(f'http://{domain}', expected_path)
                 ])
 
-        for url in sorted(test_urls, key=len):  # aka: I would like to talk to your manager
+            if not domain.startswith('www') and not ip:
+                for expected_path in self.expected_paths:
+                    test_urls.update([
+                        urljoin(f'https://www.{domain}', expected_path),
+                        urljoin(f'http://www.{domain}', expected_path)
+                    ])
+
+        for url in sorted(test_urls, key=len, reverse=True):  # Longest URL first, so /.well-known/ path is prioritized
             try:
                 response = self._try_get_url(url)
                 if re.search("^[C,c]ontact", response, re.MULTILINE):
