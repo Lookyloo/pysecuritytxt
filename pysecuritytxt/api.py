@@ -106,7 +106,10 @@ class PySecurityTXT():
             :param parse: Parse the file and returns a json dictionary with the relevant fields
         '''
         if hint.endswith('security.txt'):
-            return self._try_get_url(hint)
+            response = self._try_get_url(hint)
+            if parse:
+                return json.dumps(self.parse(response))
+            return response
 
         if re.search("^http[s]?://", hint):
             # we have a URL, get the hostname
