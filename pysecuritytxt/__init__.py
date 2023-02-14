@@ -1,6 +1,6 @@
 import argparse
 
-from .api import PySecurityTXT
+from .api import PySecurityTXT, SecurityTXTNotAvailable  # noqa
 
 
 def main():
