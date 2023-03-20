@@ -6,7 +6,8 @@ import json
 import logging
 import re
 
-from typing import Set, Union, Dict, List
+from importlib.metadata import version
+from typing import Set, Union, Dict, List, Optional
 from urllib.parse import urljoin, urlparse
 
 import requests
@@ -22,11 +23,16 @@ class SecurityTXTNotAvailable(PySecurityTXTException):
 
 class PySecurityTXT():
 
-    def __init__(self, loglevel: int=logging.INFO):
-        """Do things to a security.txt file."""
+    def __init__(self, loglevel: int=logging.INFO, useragent: Optional[str]=None):
+        """Do things to a security.txt file.
+
+        :param loglevel: Python loglevel
+        :param useragent: The User Agent used by requests to run the HTTP request.
+        """
         self.logger = logging.getLogger(f'{self.__class__.__name__}')
         self.logger.setLevel(loglevel)
         self.session = requests.session()
+        self.session.headers['user-agent'] = useragent if useragent else f'PySecurityTXT / {version("pysecuritytxt")}'
         self.expected_paths = ['/.well-known/security.txt', '/security.txt']
 
     def _try_get_url(self, url: str) -> str:
