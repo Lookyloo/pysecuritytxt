@@ -65,7 +65,7 @@ class PySecurityTXT():
                 to_return['acknowledgments'] = acknowledgments[0]
             else:
                 to_return['acknowledgments'] = acknowledgments
-        if canonical := re.findall("^[C,c]canonical[:]? (.*)$", file, re.MULTILINE):
+        if canonical := re.findall("^[C,c]anonical[:]? (.*)$", file, re.MULTILINE):
             if len(canonical) == 1:
                 to_return['canonical'] = canonical[0]
             else:
