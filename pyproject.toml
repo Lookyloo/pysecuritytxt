@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pysecuritytxt"
-version = "1.1.2"
+version = "1.2.0"
 description = "Python CLI and module for querying security.txt files on domains."
 authors = ["Raphaël Vinot <raphael.vinot@circl.lu>"]
 license = "BSD-3-Clause"
@@ -22,6 +22,7 @@ classifiers = [
     'Programming Language :: Python :: 3.9',
     'Programming Language :: Python :: 3.10',
     'Programming Language :: Python :: 3.11',
+    'Programming Language :: Python :: 3.12',
     'Topic :: Security',
     'Topic :: Internet',
 ]
@@ -39,9 +40,9 @@ Sphinx = [
     {version = "^7.2", python = ">=3.9", optional = true}
 ]
 
-[tool.poetry.dev-dependencies]
-mypy = "^1.5.1"
-types-requests = "^2.31.0.7"
+[tool.poetry.group.dev.dependencies]
+mypy = "^1.6.1"
+types-requests = "^2.31.0.10"
 ipython = [
     {version = "<8.13.0", python = "<3.9"},
     {version = "^8.13.0", python = ">=3.9"}
