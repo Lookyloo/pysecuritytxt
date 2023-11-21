@@ -23,16 +23,20 @@ class SecurityTXTNotAvailable(PySecurityTXTException):
 
 class PySecurityTXT():
 
-    def __init__(self, loglevel: int=logging.INFO, useragent: Optional[str]=None):
+    def __init__(self, loglevel: int=logging.INFO, useragent: Optional[str]=None,
+                 *, proxies: Optional[Dict[str, str]]=None):
         """Do things to a security.txt file.
 
         :param loglevel: Python loglevel
         :param useragent: The User Agent used by requests to run the HTTP request.
+        :param proxies: The proxies to use for the request. More details: https://requests.readthedocs.io/en/latest/
         """
         self.logger = logging.getLogger(f'{self.__class__.__name__}')
         self.logger.setLevel(loglevel)
         self.session = requests.session()
         self.session.headers['user-agent'] = useragent if useragent else f'PySecurityTXT / {version("pysecuritytxt")}'
+        if proxies:
+            self.session.proxies.update(proxies)
         self.expected_paths = ['/.well-known/security.txt', '/security.txt']
 
     def _try_get_url(self, url: str) -> str:
