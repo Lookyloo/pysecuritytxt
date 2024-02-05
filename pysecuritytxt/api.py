@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
+
+from __future__ import annotations
 
 import ipaddress
 import json
@@ -7,7 +8,6 @@ import logging
 import re
 
 from importlib.metadata import version
-from typing import Set, Union, Dict, List, Optional
 from urllib.parse import urljoin, urlparse
 
 import requests
@@ -23,8 +23,8 @@ class SecurityTXTNotAvailable(PySecurityTXTException):
 
 class PySecurityTXT():
 
-    def __init__(self, loglevel: int=logging.INFO, useragent: Optional[str]=None,
-                 *, proxies: Optional[Dict[str, str]]=None):
+    def __init__(self, loglevel: int=logging.INFO, useragent: str | None=None,
+                 *, proxies: dict[str, str] | None=None):
         """Do things to a security.txt file.
 
         :param loglevel: Python loglevel
@@ -47,18 +47,18 @@ class PySecurityTXT():
             raise SecurityTXTNotAvailable(f'Unable to get the file from: {url}')
         return response.text
 
-    def _all_possible_domains(self, hostname: str) -> Set[str]:
+    def _all_possible_domains(self, hostname: str) -> set[str]:
         hostname_parts = hostname.split('.')
         if len(hostname_parts) <= 2:
             return {hostname, }
         current_domain = '.'.join(hostname_parts[-2:])
-        to_return: Set[str] = {current_domain, }
+        to_return: set[str] = {current_domain, }
         for domain_part in reversed(hostname_parts[:-2]):
             current_domain = f'{domain_part}.{current_domain}'
             to_return.add(current_domain)
         return to_return
 
-    def parse(self, file: str) -> Dict[str, Union[str, List[str]]]:
+    def parse(self, file: str) -> dict[str, str | list[str]]:
         """Takes a security.txt file, parses it.
 
             :param file: The security.txt file.
@@ -103,7 +103,7 @@ class PySecurityTXT():
         if prefered_languages := re.findall("^[P,p]referred-[L,l]anguages[:]? (.*)$", file, re.MULTILINE):
             # this one must be there only once, and contains a list of languages
             # I have limited trust on that, so let's normalize it
-            languages: List[str] = []
+            languages: list[str] = []
             for lang_list in prefered_languages:
                 languages += [language.strip() for language in lang_list.split(',') if language.strip()]
             to_return['prefered-languages'] = languages
@@ -136,7 +136,7 @@ class PySecurityTXT():
         except ValueError:
             all_domains = self._all_possible_domains(hostname)
             ip = False
-        test_urls: Set[str] = set()
+        test_urls: set[str] = set()
         for domain in all_domains:
             # we have what should be a domain or an ip, let's try a few things
             for expected_path in self.expected_paths:

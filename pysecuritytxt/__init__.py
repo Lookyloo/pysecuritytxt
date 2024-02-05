@@ -1,9 +1,9 @@
 import argparse
 
-from .api import PySecurityTXT, SecurityTXTNotAvailable  # noqa
+from .api import PySecurityTXT, SecurityTXTNotAvailable, PySecurityTXTException  # noqa
 
 
-__all__ = ['PySecurityTXT', 'SecurityTXTNotAvailable']
+__all__ = ['PySecurityTXT', 'SecurityTXTNotAvailable', 'PySecurityTXTException']
 
 
 def main() -> None:
