@@ -79,6 +79,11 @@ class PySecurityTXT():
                 to_return['contact'] = contact[0]
             else:
                 to_return['contact'] = contact
+        if csaf := re.findall("^CSAF[:]? (.*)$", file, re.MULTILINE):
+            if len(csaf) == 1:
+                to_return['csaf'] = csaf[0]
+            else:
+                to_return['csaf'] = csaf
         if encryption := re.findall("^[E,e]ncryption[:]? (.*)$", file, re.MULTILINE):
             if len(encryption) == 1:
                 to_return['encryption'] = encryption[0]
