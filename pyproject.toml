@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pysecuritytxt"
-version = "1.2.3"
+version = "1.3.0"
 description = "Python CLI and module for querying security.txt files on domains."
 authors = ["Raphaël Vinot <raphael.vinot@circl.lu>"]
 license = "BSD-3-Clause"
