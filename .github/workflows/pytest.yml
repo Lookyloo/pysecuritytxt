@@ -1,4 +1,4 @@
-name: Python application - MyPy
+name: Python application - PyTest
 
 on:
   push:
