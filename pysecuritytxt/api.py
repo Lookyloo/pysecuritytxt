@@ -6,6 +6,7 @@ import ipaddress
 import json
 import logging
 import re
+import socket
 
 from importlib.metadata import version
 from urllib.parse import urljoin, urlparse
@@ -41,8 +42,10 @@ class PySecurityTXT():
 
     def _try_get_url(self, url: str) -> str:
         try:
-            response = self.session.get(url)
+            response = self.session.get(url, timeout=4)
             response.raise_for_status()
+        except requests.Timeout as e:
+            raise e
         except (requests.HTTPError, requests.exceptions.ConnectionError):
             raise SecurityTXTNotAvailable(f'Unable to get the file from: {url}')
         return response.text
@@ -141,32 +144,52 @@ class PySecurityTXT():
         except ValueError:
             all_domains = self._all_possible_domains(hostname)
             ip = False
-        test_urls: set[str] = set()
+        test_urls: set[tuple[str, str]] = set()
         for domain in all_domains:
             # we have what should be a domain or an ip, let's try a few things
-            for expected_path in self.expected_paths:
-                test_urls.update([
-                    urljoin(f'https://{domain}', expected_path),
-                    urljoin(f'http://{domain}', expected_path)
-                ])
-
-            if not domain.startswith('www') and not ip:
+            try:
+                if not ip:
+                    # Quick domain name resolution and ignore if it fails
+                    socket.gethostbyname(domain)
+            except Exception as e:
+                self.logger.info(f'Unable to resolve {domain}: {e}')
+            else:
                 for expected_path in self.expected_paths:
                     test_urls.update([
-                        urljoin(f'https://www.{domain}', expected_path),
-                        urljoin(f'http://www.{domain}', expected_path)
+                        (domain, urljoin(f'https://{domain}', expected_path)),
+                        (domain, urljoin(f'http://{domain}', expected_path))
                     ])
 
-        for url in sorted(test_urls, key=len, reverse=True):  # Longest URL first, so /.well-known/ path is prioritized
+            if not domain.startswith('www') and not ip:
+                www_domain = f'www.{domain}'
+                try:
+                    socket.gethostbyname(www_domain)
+                except Exception as e:
+                    self.logger.info(f'Unable to resolve {www_domain}: {e}')
+                else:
+                    for expected_path in self.expected_paths:
+                        test_urls.update([
+                            (www_domain, urljoin(f'https://{www_domain}', expected_path)),
+                            (www_domain, urljoin(f'http://{www_domain}', expected_path))
+                        ])
+
+        timeout_domains = set()
+        tested_urls = set()
+        for domain, url in sorted(test_urls, key=len, reverse=True):  # Longest URL first, so /.well-known/ path is prioritized
+            if domain in timeout_domains:
+                continue
+            tested_urls.add(url)
             try:
                 response = self._try_get_url(url)
                 if re.search("^[C,c]ontact", response, re.MULTILINE):
                     # Because we often get responses that are just plain HTML pages and a 2XX status code.
                     break
+            except requests.Timeout:
+                timeout_domains.add(domain)
             except SecurityTXTNotAvailable:
                 self.logger.debug(f'Not available on {url}')
         else:
-            raise SecurityTXTNotAvailable(f'Unable to file on {", ".join(test_urls)}')
+            raise SecurityTXTNotAvailable(f'Unable to file on {", ".join(tested_urls)}')
 
         if not parse:
             return response
