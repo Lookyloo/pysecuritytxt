@@ -115,6 +115,8 @@ class PySecurityTXT():
             for lang_list in prefered_languages:
                 languages += [language.strip() for language in lang_list.split(',') if language.strip()]
             to_return['prefered-languages'] = languages
+        # Strip all entries
+        to_return = {key: value.strip() if isinstance(value, str) else [v.strip() for v in value] for key, value in to_return.items()}
         return to_return
 
     def get(self, hint: str, /, *, parse: bool=False) -> str:
