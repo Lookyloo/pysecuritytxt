@@ -1,6 +1,6 @@
 [project]
 name = "pysecuritytxt"
-version = "1.3.4"
+version = "1.3.3"
 description = "Python CLI and module for querying security.txt files on domains."
 authors = [
     {name="Raphaël Vinot", email="raphael.vinot@circl.lu"}
