@@ -40,7 +40,7 @@ docs = ["Sphinx (>=8.2.3) ; python_version >= \"3.11\""]
 
 [tool.poetry.group.dev.dependencies]
 mypy = "^1.17.1"
-types-requests = "^2.32.4.20250809"
+types-requests = "^2.32.4.20250913"
 pytest = "^8.4.1"
 
 [build-system]
