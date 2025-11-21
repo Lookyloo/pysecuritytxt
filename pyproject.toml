@@ -7,7 +7,7 @@ authors = [
 ]
 license = "BSD-3-Clause"
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 
 dynamic = [ "classifiers" ]
 
@@ -39,9 +39,9 @@ pysecuritytxt = 'pysecuritytxt:main'
 docs = ["Sphinx (>=8.2.3) ; python_version >= \"3.11\""]
 
 [tool.poetry.group.dev.dependencies]
-mypy = "^1.17.1"
-types-requests = "^2.32.4.20250809"
-pytest = "^8.4.1"
+mypy = "^1.18.2"
+types-requests = "^2.32.4.20250913"
+pytest = "^9.0.1"
 
 [build-system]
 requires = ["poetry-core>=2.0"]
