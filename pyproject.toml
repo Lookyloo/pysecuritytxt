@@ -36,7 +36,7 @@ classifiers = [
 pysecuritytxt = 'pysecuritytxt:main'
 
 [project.optional-dependencies]
-docs = ["Sphinx (>=9.0.1) ; python_version >= \"3.11\""]
+docs = ["Sphinx (>=9.0.4) ; python_version >= \"3.11\""]
 
 [tool.poetry.group.dev.dependencies]
 mypy = "^1.19.0"
