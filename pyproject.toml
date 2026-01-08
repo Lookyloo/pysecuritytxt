@@ -36,12 +36,12 @@ classifiers = [
 pysecuritytxt = 'pysecuritytxt:main'
 
 [project.optional-dependencies]
-docs = ["Sphinx (>=9.0.4) ; python_version >= \"3.11\""]
+docs = ["Sphinx (>=9.1.0) ; python_version >= \"3.12\""]
 
 [tool.poetry.group.dev.dependencies]
-mypy = "^1.19.0"
-types-requests = "^2.32.4.20250913"
-pytest = "^9.0.1"
+mypy = "^1.19.1"
+types-requests = "^2.32.4.20260107"
+pytest = "^9.0.2"
 
 [build-system]
 requires = ["poetry-core>=2.0"]
