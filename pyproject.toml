@@ -39,7 +39,7 @@ pysecuritytxt = 'pysecuritytxt:main'
 docs = ["Sphinx (>=9.2.0) ; python_version >= \"3.13\""]
 
 [tool.poetry.group.dev.dependencies]
-mypy = "^2.4.0"
+mypy = "^2.4.1"
 types-requests = "^2.33.0.20261006"
 pytest = "^9.1.1"
 
